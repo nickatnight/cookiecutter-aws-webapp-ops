@@ -1,0 +1,37 @@
+---
+{% raw %}
+- name: Create Users
+  user:
+    name: "{{ item.value.name }}"
+    password: "{{ item.value.password }}"
+    group: "{{ item.value.group }}"
+    state: "{{ item.value.state }}"
+    shell: "/bin/bash"       
+    createhome: yes
+    skeleton: yes
+    append: yes
+    update_password: on_create
+    generate_ssh_key: yes
+    ssh_key_type: rsa
+    ssh_key_bits: 4096
+  with_dict: "{{ shell_users }}"
+
+- name: Add SSH keys for ubuntu users
+  authorized_key:
+    user: ubuntu
+    state: "{{ item.value.state }}"
+    key: "{{ item.value.rsa }}"
+  with_dict: "{{ ssh_keys }}"
+{% endraw %}
+- name: install sudo
+  apt:
+    name: sudo
+    state: present
+
+- name: set sudoers
+  lineinfile: 
+    dest: /etc/sudoers.d/ansible
+    line: "%sudo ALL=(ALL) NOPASSWD: ALL"
+    state: present
+    create: yes
+    validate: "visudo -cf %s"

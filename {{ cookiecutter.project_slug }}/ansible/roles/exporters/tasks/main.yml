@@ -1,0 +1,21 @@
+---
+- name: install stack deps
+  pip:
+    name:
+      - jsondiff
+      - pyyaml
+
+- name: Copy docker-compose file
+  copy:
+    src: ../../../../docker-compose.monitoring.yml
+    dest: /tmp/docker-compose.monitoring.yml
+    owner: ubuntu
+    group: ubuntu
+    mode: '0644'
+
+- name: deploy monitoring stack from uploaded yaml definition
+  docker_stack:
+    state: present
+    name: monitoring
+    compose: 
+      - /tmp/docker-compose.monitoring.yml

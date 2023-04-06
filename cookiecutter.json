@@ -1,0 +1,27 @@
+{
+    "project_name": "Base Project Ops",
+    "project_slug": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
+    "project_slug_simple": "{{ cookiecutter.project_name|lower|replace(' ', '') }}",
+    "first_name": "yourname",
+    "ssh_pub_key_file": "/Users/beta/.ssh/id_rsa.pub",
+
+    "aws_region": ["us-west-1", "us-west-2", "us-east-1", "us-east-2", "eu-west-1", "eu-west-2", "eu-west-3", "eu-central-1"],
+
+    "aws_cli_version": "1.27.107",
+
+    "ami_distro": ["Ubuntu - Jammy", "Ubuntu - Focal"],
+
+    "rds_username": "{{ cookiecutter.project_slug_simple }}",
+    "rds_password": "{{ cookiecutter.project_slug_simple }}!rocks",
+    "rds_storage": 10,
+    "rds_engine": ["postgres", "mysql"],
+    "rds_engine_version": "{%- if cookiecutter.rds_engine == 'postgres' %}15.2{% else %}8.0.27{%- endif %}",
+    "rds_instance_class": "db.t3.micro",
+    "rds_name": "{{ cookiecutter.project_slug_simple }}",
+
+    "ec2_instance_type": "t2.micro",
+
+    "ecr_repo_name": "changemecr",
+
+    "enable_stack_monitoring": ["y", "n"]
+}

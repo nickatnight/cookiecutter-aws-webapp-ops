@@ -1,0 +1,21 @@
+---
+
+name: ci
+
+on:
+  push:
+    tags:
+      - '*'
+    branches:
+      - main
+
+jobs:
+  create-release:
+    permissions:
+      contents: write
+    # needs: [lint, tests]
+    uses: nickatnight/gha-workflows/.github/workflows/create-release.yml@main
+    with:
+      branch: "master"
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}

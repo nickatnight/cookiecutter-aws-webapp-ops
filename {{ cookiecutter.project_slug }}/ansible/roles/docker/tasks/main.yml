@@ -1,0 +1,41 @@
+
+---
+
+- name: Add Docker repo key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    id: 0EBFCD88
+    state: present
+
+- name: Add Docker repo
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Install Docker
+  apt:
+    name: docker-ce=5:20.10.*
+    update_cache: yes
+    state: present
+
+- name: Install docker-compose
+  shell: curl -L "https://github.com/docker/compose/releases/download/v2.12.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
+
+- name: Get Docker info
+  shell: docker info
+  register: docker_info
+  changed_when: false
+{% raw %}
+- name: Configure Docker
+  shell: "{{ item }}"
+  when: "docker_info.stdout.find('Swarm: inactive') != -1"
+  with_items:
+    - docker swarm init --advertise-addr {{ host_ip }}
+    - docker swarm update --task-history-limit 1
+{% endraw %}
+- name: Add ubuntu user to docker group
+  user: 
+    name: ubuntu
+    groups: docker
+    state: present
+    append: yes

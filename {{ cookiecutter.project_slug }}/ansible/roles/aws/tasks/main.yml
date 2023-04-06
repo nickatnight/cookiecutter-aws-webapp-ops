@@ -1,0 +1,7 @@
+---
+
+- name: Download and unarchive awscli
+  unarchive:
+    src: https://github.com/aws/aws-cli/archive/refs/tags/{{ cookiecutter.aws_cli_version }}.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes

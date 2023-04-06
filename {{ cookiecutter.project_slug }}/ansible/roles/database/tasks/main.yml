@@ -1,0 +1,7 @@
+---
+mysql
+- name: Install Database Client
+  apt:
+    name: {%- if cookiecutter.rds_engine == 'postgres' %} postgresql{% else %} mysql{%- endif %}-client
+    update_cache: yes
+    state: present

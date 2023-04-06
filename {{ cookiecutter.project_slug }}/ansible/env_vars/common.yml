@@ -1,0 +1,17 @@
+  
+---
+
+ssh_pub_key_file: {{ cookiecutter.ssh_pub_key_file }}
+
+shell_users:
+  {{ cookiecutter.first_name }}:
+    name: nick
+    password:
+    group: sudo
+    state: present
+
+ssh_keys:
+  {{ cookiecutter.first_name }}:
+    rsa: {% raw %}"{{ lookup('file', ssh_pub_key_file) }}"{% endraw %}
+    state: present
+    name: {{ cookiecutter.first_name }}

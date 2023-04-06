@@ -1,0 +1,25 @@
+---
+
+- hosts: all
+  gather_facts: False
+  become: yes
+{% raw %}
+- name: Provision
+  hosts: all
+  become: yes
+  vars_files:
+    - env_vars/common.yml
+    - env_vars/{{ env_name }}.yml
+  vars:
+    ansible_ssh_user: ubuntu
+    ansible_ssh_private_key_file: "{{ key_file }}"
+{% endraw %}
+  roles:
+    - { role: docker, tags: docker }
+    - { role: python, tags: python }
+    - { role: users, tags: users }
+    - { role: database, tags: database }
+    - { role: aws, tags: aws }
+    {%- if cookiecutter.enable_stack_monitoring == 'y' %}
+    - { role: exporters, tags: prom }
+    {%- endif %}

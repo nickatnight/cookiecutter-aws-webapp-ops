@@ -1,0 +1,10 @@
+# OS
+.DS_Store
+
+# Terraform
+*.tfstate*
+.terraform*
+*.tfvars
+
+# Misc
+*_kp*
