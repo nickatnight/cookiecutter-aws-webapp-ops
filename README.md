@@ -11,16 +11,13 @@
 ## Quickstart
 Install the latest Cookiecutter if you haven't installed it yet (this requires Cookiecutter 1.4.0 or higher):
 ```sh
-pip install cookiecutter requests
+pip install cookiecutter
 ```
 
 Generate project:
 ```sh
 cookiecutter https://github.com/nickatnight/cookiecutter-aws-webapp-ops.git
 ```
-
-Then:
-- `cd` to new project folder and follow [README](/%7B%7B%20cookiecutter.project_slug%20%7D%7D/README.md)
 
 ## Input Variables
 The generator (cookiecutter) will ask you for some data, you might want to have at hand before generating the project.
@@ -45,7 +42,6 @@ The input variables, with their default values (some auto generated) are:
 * `ec2_instance_type`: EC2 instance type
 * `ecr_repo_name`: ECR repository name
 * `enable_stack_monitoring`: Enable Docker Swarm monitoring stack
-
 
 ## More Details
 After using this generator, your new project (the directory created) will contain an extensive `README.md` with instructions for development, deployment, etc. You can view it [here](/%7B%7B%20cookiecutter.project_slug%20%7D%7D/README.md)
